@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+  <groupId>serge</groupId>
+  <artifactId>serge-persistence</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
+  <versioning>
+    <versions>
+      <version>1.0.0-SNAPSHOT</version>
+    </versions>
+    <lastUpdated>20101101005315</lastUpdated>
+  </versioning>
+</metadata>
