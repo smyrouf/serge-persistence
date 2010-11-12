@@ -1,6 +1,9 @@
 package com.serge.persistence;
 
+import static org.junit.Assert.*;
+
 import com.serge.persistence.model.test.Entity;
+import com.serge.persistence.model.test.EntityDao;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -12,8 +15,15 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class DaoSupportTest {
 
 	@Test
-	public void testCreate() {
-		Entity entity = new Entity();
-		
+	public void testPersist() {
+		EntityDao entityDao = new EntityDao();
+		Entity entityPersist = entityDao.persist(new Entity());
+		assertNotNull(entityPersist.getId());
+	}
+	
+	@Test
+	public void testdelete() {
+		EntityDao entityDao = new EntityDao();
+		Entity entityPersist = entityDao.persist(new Entity());
 	}
 }

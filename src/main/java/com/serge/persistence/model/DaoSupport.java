@@ -11,14 +11,13 @@ import org.hibernate.annotations.common.reflection.ReflectionUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.stereotype.Component;
 
 
-
-public abstract class DaoSupport<T extends Identificable> {
-
+public abstract class DaoSupport<T extends Identificable> extends HibernateDaoSupport{
 
 	@Autowired
-	protected HibernateTemplate hibernateTemplate;
+	protected SessionFactory sessionFactory;
 	
 	private Class<T> getEntityClass() {
 	     ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
@@ -31,12 +30,13 @@ public abstract class DaoSupport<T extends Identificable> {
 	}
 	
 	public T persist(T entity) {
-		this.hibernateTemplate.saveOrUpdate(entity);
+		HibernateTemplate hibernateTemplate = getHibernateTemplate();
+		getHibernateTemplate().saveOrUpdate(entity);
 		return entity;
 	}
 	
 	public T delete(T entity) {
-		this.hibernateTemplate.delete(entity);
+		getHibernateTemplate().delete(entity);
 		return entity;
 	}
 	
@@ -44,7 +44,7 @@ public abstract class DaoSupport<T extends Identificable> {
 		if ( getIdEntityClass().isInstance(id)) {
 			throw new IllegalArgumentException(id+" must be of type"+getIdEntityClass()); 
 		}
-		T entity = this.hibernateTemplate.get(getEntityClass(), id);
+		T entity = getHibernateTemplate().get(getEntityClass(), id);
 		return entity;
 	}
 }
