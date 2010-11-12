@@ -25,7 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-@ContextConfiguration
+@ContextConfiguration(locations="/ProjectStrategyTest-context.xml")
 @RunWith(SpringJUnit4ClassRunner.class)
 public class ProjectStrategyTest {
 	
@@ -34,32 +34,32 @@ public class ProjectStrategyTest {
 
 	@Test
 	public void testSimpleProperties() throws Exception {
-		assertNotNull(projectStrategy);
+		assertNotNull(this.projectStrategy);
 	}
 	
 	@Test
 	public void testNameDatabase() throws Exception {
-		assertNotNull(projectStrategy);
+		assertNotNull(this.projectStrategy);
 		assertEquals("PROJECT_ESSAI",this.projectStrategy.classToTableName("essai"));
 	}
 	
 	
 	@Test
 	public void testColumnName() throws Exception {
-		assertNotNull(projectStrategy);
+		assertNotNull(this.projectStrategy);
 		assertEquals("COLUMN",this.projectStrategy.columnName("column"));
 	}
 	
 	@Test
 	public void testPropertyToColumnName() throws Exception {
-		assertNotNull(projectStrategy);
+		assertNotNull(this.projectStrategy);
 		this.projectStrategy.classToTableName("essai");
 		assertEquals("PROPERTY",this.projectStrategy.propertyToColumnName("property"));
 	}
 	
 	@Test
 	public void testPropertyToColumnNameId() throws Exception {
-		assertNotNull(projectStrategy);
+		assertNotNull(this.projectStrategy);
 		this.projectStrategy.classToTableName("essai");
 		assertEquals("ESSAI_ID",this.projectStrategy.propertyToColumnName("ID"));
 	}
