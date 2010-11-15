@@ -17,13 +17,13 @@ public abstract class DaoStandardHibernate<T extends Identificable<? extends Ser
 	
 	protected HibernateTemplate getHibernateTemplate() {
 		if ( this.hibernateTemplate == null ) {
-			this.hibernateTemplate = new HibernateTemplate(sessionFactory);
+			this.hibernateTemplate = new HibernateTemplate(this.sessionFactory);
 		} 
 		return this.hibernateTemplate;
 	}
 	
 	public SessionFactory getSessionFactory() {
-		return sessionFactory;
+		return this.sessionFactory;
 	}
 
 
@@ -31,19 +31,29 @@ public abstract class DaoStandardHibernate<T extends Identificable<? extends Ser
 		this.sessionFactory = sessionFactory;
 	}
 	
-	private Class<T> getEntityClass() {
+	protected Class<T> getEntityClass() {
 	     ParameterizedType parameterizedType = (ParameterizedType) getClass().getGenericSuperclass();
 	     return (Class<T>) parameterizedType.getActualTypeArguments()[0];
 	}
 	
-	private Class getIdEntityClass() {
+	protected Class<?> getIdEntityClass() {
 	     ParameterizedType parameterizedType = (ParameterizedType) getEntityClass().getGenericSuperclass();
-	     return (Class<T>) parameterizedType.getActualTypeArguments()[0];
+	     return (Class<?>) parameterizedType.getActualTypeArguments()[0];
 	}
 	
 	
 	public T persist(T entity) {
-		getHibernateTemplate().saveOrUpdate(entity);
+		getHibernateTemplate().save(entity);
+		return entity;
+	}
+	
+	public T detach(T entity) {
+		getHibernateTemplate().evict(entity);
+		return entity;
+	}
+	
+	public T attach(T entity) {
+		getHibernateTemplate().merge(entity);
 		return entity;
 	}
 	
@@ -57,7 +67,7 @@ public abstract class DaoStandardHibernate<T extends Identificable<? extends Ser
 		if ( getIdEntityClass().isInstance(id)) {
 			throw new IllegalArgumentException(id+" must be of type"+getIdEntityClass()); 
 		}
-		T entity = getHibernateTemplate().get(getEntityClass(), id);
+		T entity = getHibernateTemplate().get((Class<T>)getEntityClass(), id);
 		return entity;
 	}
 }
