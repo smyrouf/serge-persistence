@@ -29,9 +29,10 @@
 		</property>
 		
 	</bean>
-	
-	
-	
-	
-	
+	<bean
+		class="org.springframework.orm.hibernate3.HibernateTransactionManager"
+		name="transactionManager" scope="singleton">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
 </beans>
