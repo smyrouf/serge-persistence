@@ -1,6 +1,7 @@
 package com.serge.persistence.model.test;
 
 import javax.persistence.Basic;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,6 +21,7 @@ public class EntityTest implements Identificable<Integer> {
 
 	
 	@Basic
+	@Column(unique=true)
 	private String name;
 	
 	public void setId(Integer id) {
